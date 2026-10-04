@@ -342,7 +342,16 @@ function buildMessageEl(m, isStreaming) {
 
   const avatar = document.createElement("div");
   avatar.className = "msg-avatar";
-  avatar.textContent = m.role === "user" ? "You" : "AG";
+  if (m.role === "user") {
+    avatar.textContent = "You";
+  } else {
+    const mark = document.createElement("img");
+    mark.src = "mark.webp";
+    mark.alt = "AG";
+    mark.width = 32;
+    mark.height = 32;
+    avatar.appendChild(mark);
+  }
 
   const body = document.createElement("div");
   body.className = "msg-body";

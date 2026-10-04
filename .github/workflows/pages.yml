@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir -p _site/chat _site/assets
           cp docs/index.html _site/index.html
-          cp docs/assets/hero.webp docs/assets/mark.webp _site/assets/
+          cp docs/assets/hero.webp docs/assets/mark.webp docs/assets/plate.webp _site/assets/
           cp spaces/chat/index.html \
              spaces/chat/app.js \
              spaces/chat/chat-worker.js \

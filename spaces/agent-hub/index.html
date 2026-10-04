@@ -81,6 +81,15 @@ h2 span {
   padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 8px;
   min-height: 168px; color: var(--text);
 }
+.card-plate {
+  width: calc(100% + 32px);
+  height: 112px;
+  object-fit: cover;
+  object-position: center;
+  margin: -16px -16px 6px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
 a.card:hover { border-color: var(--accent); text-decoration: none; }
 .card-top { display: flex; align-items: baseline; gap: 10px; }
 .index {
@@ -169,6 +178,7 @@ footer {
   <p class="section-sub">Open the hosted page, or serve the folder on this machine. Pick a model. The first download is about 400 MB to 1.1 GB from the Hugging Face CDN. After that the browser holds the weights.</p>
   <div class="grid">
     <a class="card span-2" href="https://anubhavg-icpl.github.io/agent-fleet/chat/">
+      <img class="card-plate" src="assets/plate.webp" alt="" width="1200" height="675" />
       <div class="card-top">
         <span class="index">01</span>
         <span class="card-title">Chat — Anubhav Gain</span>
