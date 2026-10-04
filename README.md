@@ -10,6 +10,8 @@ generated: { by: human:anubhav-gain, at: 2026-10-04T00:00:00Z }
 
 # agent-fleet
 
+![Agent Fleet. Anubhav Gain. Local AI on this machine.](docs/assets/banner.webp)
+
 Browser-side inference and a staged Docker agent stack, operated from
 [anubhavg-icpl/agent-fleet](https://github.com/anubhavg-icpl/agent-fleet).
 
@@ -24,6 +26,14 @@ GitHub Pages hosts the HTML:
 
 Setup is in [docs/setup.md](docs/setup.md). The knowledge bundle index is
 [index.md](index.md).
+
+## Surfaces
+
+![Anubhav Gain chat. Qwen3 1.7B, running in the browser.](docs/assets/chat.webp)
+
+![Anubhav Gain chat on a narrow screen.](docs/assets/chat-mobile.webp)
+
+![Agent Fleet hub. The chat is on GitHub Pages. The Docker services are staged.](docs/assets/hub.webp)
 
 ## What is in this repo
 
