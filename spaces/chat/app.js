@@ -3,6 +3,8 @@
    models from the HF CDN cached by the browser. No servers involved.
 */
 
+import { MODELS } from "./models.js";
+
 const $ = (id) => document.getElementById(id);
 
 const LS_KEY = "agent-fleet-chat:v1";
@@ -313,14 +315,13 @@ function renderMessages(streaming = false) {
     empty.className = "empty-state";
     empty.id = "empty-state";
     empty.innerHTML = `
-      <div class="empty-glow"></div>
-      <h1>Local AI. Zero setup.</h1>
-      <p class="empty-byline">Anubhav Gain</p>
-      <p>Pick a model and start talking. Weights download once from the Hugging Face CDN and are cached by your browser — after that, inference is instant.</p>
+      <p class="kicker">01 · Anubhav Gain</p>
+      <h1>Local AI.<br />On this machine.</h1>
+      <p class="lede">Security software engineer at Infopercept, Ahmedabad. The model runs in this browser. A Hugging Face account is not required. The first weights download is about 400 MB–1.1 GB, then the browser keeps them.</p>
       <div class="empty-chips">
-        <button class="chip" data-fill="Explain how transformers work, simply.">Explain transformers</button>
-        <button class="chip" data-fill="Write a Python function that finds prime numbers.">Write code</button>
-        <button class="chip" data-fill="Give me 5 ideas for a weekend project.">Brainstorm</button>
+        <button class="chip" data-n="01" data-fill="Explain how a YARA rule decides a match, with a short example.">Explain a YARA rule</button>
+        <button class="chip" data-n="02" data-fill="Write a small Rust function that checks whether a file starts with the PE header.">A Rust file header</button>
+        <button class="chip" data-n="03" data-fill="What should an endpoint allow-list refuse to run, and why?">What an allow-list refuses</button>
       </div>`;
     wrap.appendChild(empty);
     empty.querySelectorAll(".chip").forEach((chip) =>
@@ -340,14 +341,14 @@ function buildMessageEl(m, isStreaming) {
 
   const avatar = document.createElement("div");
   avatar.className = "msg-avatar";
-  avatar.textContent = m.role === "user" ? "Y" : "◆";
+  avatar.textContent = m.role === "user" ? "You" : "AG";
 
   const body = document.createElement("div");
   body.className = "msg-body";
 
   const role = document.createElement("div");
   role.className = "msg-role";
-  role.textContent = m.role === "user" ? "you" : "assistant";
+  role.textContent = m.role === "user" ? "You" : "Anubhav Gain";
 
   const content = document.createElement("div");
   content.className = "msg-content";
@@ -475,7 +476,9 @@ function updateCtxNote() {
 function setStatus(stateName, text) {
   const el = $("status");
   el.dataset.state = stateName;
-  $("status-text").textContent = text || stateName;
+  const label = text || stateName;
+  $("status-text").textContent = label;
+  el.title = label;
 }
 
 let toastTimer = null;
@@ -533,12 +536,29 @@ function autosize(el) {
 
 function init() {
   load();
+  state.models = MODELS;
+  buildModelSelect();
   spawnWorker();
 
   $("btn-new").addEventListener("click", () => newConversation());
   $("btn-send").addEventListener("click", send);
   $("btn-stop").addEventListener("click", stopGeneration);
-  $("btn-menu").addEventListener("click", () => $("sidebar").classList.toggle("collapsed"));
+  $("btn-menu").addEventListener("click", (e) => {
+    e.stopPropagation();
+    const sidebar = $("sidebar");
+    const mobile = window.matchMedia("(max-width: 860px)").matches;
+    if (mobile) sidebar.classList.toggle("open");
+    else sidebar.classList.toggle("collapsed");
+    $("btn-menu").setAttribute("aria-expanded", mobile
+      ? String(sidebar.classList.contains("open"))
+      : String(!sidebar.classList.contains("collapsed")));
+  });
+  $("main").addEventListener("click", () => {
+    if (!window.matchMedia("(max-width: 860px)").matches) return;
+    if (!$("sidebar").classList.contains("open")) return;
+    $("sidebar").classList.remove("open");
+    $("btn-menu").setAttribute("aria-expanded", "false");
+  });
   $("btn-export").addEventListener("click", exportConversation);
 
   $("model-select").addEventListener("change", (e) => {
@@ -606,9 +626,9 @@ function init() {
   renderConvList();
   renderMessages();
 
-  if (window.matchMedia && window.matchMedia("(max-width: 860px)").matches) {
-    $("sidebar").classList.add("collapsed");
-  }
+  const mobile = window.matchMedia && window.matchMedia("(max-width: 860px)").matches;
+  if (mobile) $("sidebar").classList.add("collapsed");
+  $("btn-menu").setAttribute("aria-expanded", mobile ? "false" : "true");
 }
 
 init();

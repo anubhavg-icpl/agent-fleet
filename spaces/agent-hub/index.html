@@ -4,244 +4,245 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Agent Fleet — Anubhav Gain</title>
-<meta name="description" content="Anubhav Gain's agent fleet: in-browser AI chat plus a one-command Docker stack." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c8cff'/%3E%3Cstop offset='1' stop-color='%234dd6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='%230b0d12' stroke='url(%23g)' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='10' fill='url(%23g)'/%3E%3C/svg%3E" />
+<meta name="description" content="Anubhav Gain's agent fleet. The chat runs on this machine. Hugging Face is only for publishing." />
+<meta name="theme-color" content="#0c0b09" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230c0b09'/%3E%3Crect x='4' y='4' width='56' height='56' fill='none' stroke='%23e4a15a' stroke-width='2'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='%23e4a15a' font-family='ui-monospace,Consolas,monospace' font-size='18'%3EAG%3C/text%3E%3C/svg%3E" />
 <style>
 :root {
-  --bg: #0b0d12; --bg-2: #10131b; --bg-3: #161a24;
-  --line: #232936; --line-2: #2e3646;
-  --text: #e7ecf3; --text-2: #9aa5b5; --text-3: #626d7e;
-  --accent: #7c8cff; --accent2: #4dd6ff;
-  --ok: #3ddc97; --warn: #ffb86b;
-  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --sans: -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+  --bg: #0c0b09; --bg-2: #141310; --bg-3: #1c1a16;
+  --line: #2c2822; --line-2: #3d362c;
+  --text: #f3ecdf; --text-2: #c4b8a6; --text-3: #8a7d6c;
+  --accent: #e4a15a; --ok: #8fbf7a;
+  --mono: "Cascadia Mono", ui-monospace, Consolas, monospace;
+  --sans: "Segoe UI", Inter, Roboto, sans-serif;
+  --display: "Iowan Old Style", Palatino, Georgia, serif;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
-  font-family: var(--sans); font-size: 15px; line-height: 1.6;
+  font-family: var(--sans); font-size: 15px; line-height: 1.55;
 }
-.wrap { max-width: 1060px; margin: 0 auto; padding: 48px 24px 80px; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 56px 24px 80px; }
 
-header.hero { margin-bottom: 42px; position: relative; }
-.glow {
-  position: absolute; top: -60px; left: -60px; width: 420px; height: 420px;
-  background: radial-gradient(circle, rgba(124,140,255,.14), transparent 65%);
-  pointer-events: none;
+.kicker {
+  margin: 0 0 12px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent);
 }
-.eyebrow {
-  font-family: var(--mono); font-size: 11.5px; letter-spacing: .22em;
-  color: var(--text-3); text-transform: uppercase; margin-bottom: 10px;
+h1 {
+  font-family: var(--display); font-weight: 600;
+  font-size: 56px; letter-spacing: -.03em; line-height: 0.95;
+  margin: 0 0 18px;
 }
-h1 { font-size: 40px; letter-spacing: -.03em; margin: 0 0 10px; line-height: 1.1; }
-h1 .grad {
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.sub { color: var(--text-2); font-size: 15.5px; max-width: 640px; }
+.role { margin: 0 0 8px; color: var(--text); font-size: 16px; }
+.sub { margin: 0; color: var(--text-2); max-width: 62ch; }
 .meta {
-  display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px;
-  font-family: var(--mono); font-size: 11.5px; color: var(--text-3);
+  display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 22px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-3);
 }
-.meta span b { color: var(--text-2); font-weight: 500; }
+.meta b { color: var(--text-2); font-weight: 500; }
 
-section { margin-top: 46px; }
+section { margin-top: 56px; }
 h2 {
-  font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--text-3); margin: 0 0 4px;
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: baseline; gap: 12px;
+  font-family: var(--display); font-size: 28px; font-weight: 600;
+  letter-spacing: -.02em; text-transform: none; color: var(--text);
+  margin: 0 0 6px;
 }
-h2 .live-dot {
-  width: 8px; height: 8px; border-radius: 50%; background: var(--ok);
-  box-shadow: 0 0 10px rgba(61,220,151,.7);
+h2 span {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
+  color: var(--accent); font-weight: 500;
 }
-h2 .pro-dot {
-  width: 8px; height: 8px; border-radius: 50%; background: var(--warn);
-  box-shadow: 0 0 10px rgba(255,184,107,.6);
-}
-.section-sub { color: var(--text-3); font-size: 13px; margin: 0 0 18px; }
+.section-sub { color: var(--text-3); font-size: 13.5px; margin: 0 0 18px; max-width: 68ch; }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .card {
-  background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px;
-  padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 8px;
-  transition: border-color .15s ease, transform .1s ease;
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 4px;
+  padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 8px;
+  min-height: 168px; color: var(--text);
 }
-a.card { color: var(--text); }
-a.card:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-2px); }
-.card.pro { opacity: .88; }
-.card.pro:hover { border-color: var(--warn); }
-
-.card-top { display: flex; align-items: center; gap: 10px; }
-.card-emoji { font-size: 22px; }
-.card-title { font-weight: 700; font-size: 15.5px; letter-spacing: -.01em; }
+a.card:hover { border-color: var(--accent); text-decoration: none; }
+.card-top { display: flex; align-items: baseline; gap: 10px; }
+.index {
+  font-family: var(--mono); font-size: 11px; color: var(--text-3); letter-spacing: .08em;
+}
+.card-title { font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
 .badge {
   margin-left: auto; font-family: var(--mono); font-size: 10px;
-  letter-spacing: .08em; padding: 3px 8px; border-radius: 999px;
+  letter-spacing: .08em; padding: 3px 7px; border-radius: 999px;
   border: 1px solid var(--line-2); color: var(--text-3); white-space: nowrap;
 }
-.badge.live { color: var(--ok); border-color: rgba(61,220,151,.35); }
-.badge.pro { color: var(--warn); border-color: rgba(255,184,107,.35); }
-.badge.new { color: var(--accent2); border-color: rgba(77,214,255,.4); }
+.badge.live { color: var(--ok); border-color: rgba(143,191,122,.4); }
+.badge.pro { color: var(--accent); border-color: rgba(228,161,90,.4); }
 .card-desc { color: var(--text-2); font-size: 13.5px; flex: 1; }
 .card-tech {
   font-family: var(--mono); font-size: 11px; color: var(--text-3);
-  border-top: 1px solid var(--line); padding-top: 10px; margin-top: 4px;
+  border-top: 1px solid var(--line); padding-top: 10px;
+}
+.span-2 { grid-column: 1 / -1; }
+
+.note {
+  margin-top: 12px; border: 1px solid var(--line); border-radius: 4px;
+  padding: 16px 18px; color: var(--text-2); font-size: 14px;
+  background: var(--bg-2);
+}
+.note strong { color: var(--text); font-weight: 600; }
+.note code {
+  font-family: var(--mono); font-size: 12px; color: var(--accent);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 1px 6px;
 }
 
-.callout {
-  margin-top: 18px; background: var(--bg-2); border: 1px solid rgba(255,184,107,.3);
-  border-radius: 14px; padding: 16px 18px; font-size: 13.5px; color: var(--text-2);
-}
-.callout b { color: var(--warn); }
-.callout code {
-  font-family: var(--mono); font-size: 12px; background: var(--bg-3);
-  border: 1px solid var(--line-2); border-radius: 6px; padding: 2px 8px; color: #a8c1ff;
-}
-
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 th {
-  text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--text-3); padding: 10px 12px; border-bottom: 1px solid var(--line-2);
+  text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--text-3); font-weight: 500;
+  padding: 10px 14px; border-bottom: 1px solid var(--line-2); background: var(--bg-2);
 }
-td { padding: 9px 12px; border-bottom: 1px solid var(--line); color: var(--text-2); }
-td:first-child { color: var(--text); font-weight: 600; }
+td { padding: 11px 14px; border-bottom: 1px solid var(--line); color: var(--text-2); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
 .tag {
   font-family: var(--mono); font-size: 10.5px; padding: 2px 8px; border-radius: 999px;
   border: 1px solid var(--line-2); white-space: nowrap;
 }
-.tag.live { color: var(--ok); border-color: rgba(61,220,151,.35); }
-.tag.pro { color: var(--warn); border-color: rgba(255,184,107,.35); }
+.tag.live { color: var(--ok); border-color: rgba(143,191,122,.4); }
+.tag.pro { color: var(--accent); border-color: rgba(228,161,90,.4); }
 .tag.alt { color: var(--text-3); }
 
 footer {
-  margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--line);
-  color: var(--text-3); font-size: 12.5px; font-family: var(--mono);
-  display: flex; flex-wrap: wrap; gap: 18px;
+  margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--line);
+  color: var(--text-3); font-size: 12px; font-family: var(--mono);
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
 }
-@media (max-width: 720px) { h1 { font-size: 30px; } .wrap { padding: 32px 16px 60px; } }
+@media (max-width: 760px) {
+  .wrap { padding: 32px 16px 56px; }
+  h1 { font-size: 40px; }
+  h2 { font-size: 24px; }
+  .grid { grid-template-columns: 1fr; }
+  .span-2 { grid-column: auto; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header class="hero">
-  <div class="glow"></div>
-  <div class="eyebrow">Anubhav Gain</div>
-  <h1>Agent <span class="grad">Fleet</span></h1>
-  <p class="sub">Security software engineer at Infopercept, Ahmedabad.
-  The chat runs in the browser. The Docker stack (n8n, Flowise, Langflow,
-  Open WebUI, AnythingLLM, LobeChat, OpenMuse) is packaged to launch when
-  Docker hosting is attached.</p>
+<header>
+  <p class="kicker">Anubhav Gain</p>
+  <h1>Agent Fleet</h1>
+  <p class="role">Security software engineer at Infopercept, Ahmedabad.</p>
+  <p class="sub">The chat runs in this browser. GitHub Pages hosts this page and the chat. Hugging Face is not required to open them. A PRO plan is what publishes the Docker services.</p>
   <div class="meta">
     <span>operator <b>Anubhav Gain</b></span>
     <span>source <b>github.com/anubhavg-icpl/agent-fleet</b></span>
-    <span>status <b>chat in repo · 7 staged</b></span>
+    <span>status <b>chat on pages · 7 staged</b></span>
   </div>
 </header>
 
 <section>
-  <h2><span class="live-dot"></span>In the browser — no keys, no signup</h2>
-  <p class="section-sub">Anubhav Gain's chat. Weights stream once from the HF CDN and stay in the browser.</p>
+  <h2><span>01</span>In the browser</h2>
+  <p class="section-sub">Open the hosted page, or serve the folder on this machine. Pick a model. The first download is about 400 MB to 1.1 GB from the Hugging Face CDN. After that the browser holds the weights.</p>
   <div class="grid">
-
-    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/chat" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">💬</span><span class="card-title">Chat — Anubhav Gain</span><span class="badge live">IN REPO</span></div>
-      <div class="card-desc">Local AI chat, 100% client-side: llama.cpp via WebAssembly in a Web Worker, streaming tokens, stop/regenerate, conversations, system prompts, real tok/s stats, Markdown + code rendering, PWA.</div>
-      <div class="card-tech">wllama · Qwen3 1.7B/0.6B · Qwen2.5 1.5B/0.5B · Llama 3.2 1B · Q4_K_M</div>
+    <a class="card span-2" href="https://anubhavg-icpl.github.io/agent-fleet/chat/">
+      <div class="card-top">
+        <span class="index">01</span>
+        <span class="card-title">Chat — Anubhav Gain</span>
+        <span class="badge live">PAGES</span>
+      </div>
+      <div class="card-desc">llama.cpp through wllama, in a Web Worker. Five Q4_K_M models. Streaming, stop, conversations, and a system prompt. No account.</div>
+      <div class="card-tech">anubhavg-icpl.github.io/agent-fleet/chat/ · local: py -3 -m http.server 8000 --directory spaces/chat</div>
     </a>
-
   </div>
 </section>
 
 <section>
-  <h2><span class="pro-dot"></span>Staged — full agent stack, one command away</h2>
-  <p class="section-sub">Fully packaged Docker Spaces: Dockerfiles, configs, secrets and an idempotent provisioner.</p>
+  <h2><span>02</span>Staged for publish</h2>
+  <p class="section-sub">Seven Docker services are in the repo. <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">py -3 deploy.py</code> publishes the chat and this page. <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">py -3 deploy.py --docker</code> adds the rest, and that step needs Hugging Face PRO.</p>
   <div class="grid">
 
-    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/n8n" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">🔁</span><span class="card-title">n8n</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">Workflow automation with 400+ integrations and AI agent nodes. Webhook URL is set on deploy. The encryption key is a Space secret. The first visit creates the owner account.</div>
-      <div class="card-tech">docker · port 7860 · secrets: N8N_ENCRYPTION_KEY</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/n8n" target="_blank" rel="noopener">
+      <div class="card-top"><span class="index">02</span><span class="card-title">n8n</span><span class="badge pro">PRO</span></div>
+      <div class="card-desc">Workflows and agent nodes. The webhook is set on deploy. The first visit creates the owner.</div>
+      <div class="card-tech">port 7860 · N8N_ENCRYPTION_KEY</div>
     </a>
 
-    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/local-chat" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">🤖</span><span class="card-title">Local Chat — Open WebUI + Ollama</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">Zero-config chat with baked-in models: llama3.2:1b, qwen2.5:0.5b, nomic-embed-text for RAG. Includes an OpenAI-compatible API endpoint for the rest of the fleet.</div>
-      <div class="card-tech">docker · supervisord · models baked at build</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/local-chat" target="_blank" rel="noopener">
+      <div class="card-top"><span class="index">03</span><span class="card-title">Local Chat</span><span class="badge pro">PRO</span></div>
+      <div class="card-desc">Open WebUI and Ollama. Models are baked at build. The first signup is the admin.</div>
+      <div class="card-tech">port 8080 · llama3.2:1b · qwen2.5:0.5b</div>
     </a>
 
-    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/openmuse" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">🧠</span><span class="card-title">OpenMuse</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">CopilotKit/OpenMuse — the personal agent with browser, terminal, files and durable work. Full stack: nginx + API (PGlite) + task worker + Playwright Chromium browser worker. Needs a free CopilotKit project key.</div>
-      <div class="card-tech">docker · node 24 · pnpm 11.19 · playwright</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/openmuse" target="_blank" rel="noopener">
+      <div class="card-top"><span class="index">04</span><span class="card-title">OpenMuse</span><span class="badge pro">PRO</span></div>
+      <div class="card-desc">Personal agent: browser, terminal, and files. The public URL is baked into the image for anubhavg-icpl.</div>
+      <div class="card-tech">port 7860 · replace the two SET_ME secrets</div>
     </a>
 
-    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/flowise" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">🧩</span><span class="card-title">Flowise</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">Visual LLM agent builder: drag-and-drop agents, tools, memory, RAG pipelines; every chatflow becomes a REST API. Basic-auth gated via Space secrets.</div>
-      <div class="card-tech">docker · node 20 · secrets: FLOWISE_USERNAME / FLOWISE_PASSWORD</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/flowise" target="_blank" rel="noopener">
+      <div class="card-top"><span class="index">05</span><span class="card-title">Flowise</span><span class="badge pro">PRO</span></div>
+      <div class="card-desc">Visual agent builder. Sign in as fleet-admin. The password is generated on deploy.</div>
+      <div class="card-tech">port 7860 · FLOWISE_USERNAME / FLOWISE_PASSWORD</div>
     </a>
 
-    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/langflow" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">🌊</span><span class="card-title">Langflow</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">Visual agent & workflow builder; every flow is an instant REST endpoint. Superuser provisioned from a Space secret on first boot.</div>
-      <div class="card-tech">docker · port 7860 · secret: LANGFLOW_SUPERUSER_PASSWORD</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/langflow" target="_blank" rel="noopener">
+      <div class="card-top"><span class="index">06</span><span class="card-title">Langflow</span><span class="badge pro">PRO</span></div>
+      <div class="card-desc">Visual flows with a run endpoint. The superuser name is langflow.</div>
+      <div class="card-tech">port 7860 · LANGFLOW_SUPERUSER_PASSWORD</div>
     </a>
 
-    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/anythingllm" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">📚</span><span class="card-title">AnythingLLM</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">All-in-one RAG workspace: drop documents into workspaces, chat with citations, built-in AI agents (web-browsing, SQL, custom).</div>
-      <div class="card-tech">docker · port 3001 · first-run wizard</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/anythingllm" target="_blank" rel="noopener">
+      <div class="card-top"><span class="index">07</span><span class="card-title">AnythingLLM</span><span class="badge pro">PRO</span></div>
+      <div class="card-desc">RAG workspace. Finish the wizard before sharing the URL. No secret is injected.</div>
+      <div class="card-tech">port 3001 · /app/worker/storage</div>
     </a>
 
-    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/lobechat" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">💠</span><span class="card-title">LobeChat</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">Polished ChatGPT-style UI with agent marketplace, plugins, vision and artifacts. Access-code gated; API keys stay client-side.</div>
-      <div class="card-tech">docker · port 3210 · secret: ACCESS_CODE</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/lobechat" target="_blank" rel="noopener">
+      <div class="card-top"><span class="index">08</span><span class="card-title">LobeChat</span><span class="badge pro">PRO</span></div>
+      <div class="card-desc">Chat UI gated by an access code. Provider keys stay in the browser.</div>
+      <div class="card-tech">port 3210 · ACCESS_CODE</div>
     </a>
 
   </div>
-
-  <div class="callout">
-    <b>Why staged?</b> Hugging Face now requires a <b>PRO subscription</b> to host Docker/Gradio Spaces on
-    free hardware (verified: <code>402 Payment Required</code> on <code>api/repos/create</code>, 2026-10-02).
-    Everything is packaged and idempotent — attach PRO (or any Docker host) and run
-    <code>python deploy.py</code> from the repo to bring all seven up in ~15 minutes.
-    The browser chat above stays a static site and does not need PRO.
+  <div class="note">
+    <strong>GitHub Pages hosts the HTML.</strong>
+    The hub and the chat are at anubhavg-icpl.github.io/agent-fleet. The same files run from a local server. Docker Spaces use a token in <code>state\hf_token</code> and <code>py -3 deploy.py --docker</code>. That step needs Hugging Face PRO.
   </div>
 </section>
 
 <section>
-  <h2>The top-20 agent landscape</h2>
-  <p class="section-sub">Where each popular platform lives in this fleet.</p>
+  <h2><span>03</span>What is packaged</h2>
+  <p class="section-sub">The browser chat is on GitHub Pages. The Docker rows are in this repository and stay off until a Hugging Face deploy succeeds.</p>
+  <div class="table-wrap">
   <table>
-    <thead><tr><th>Platform</th><th>What it is</th><th>Status in this fleet</th></tr></thead>
+    <thead><tr><th>Platform</th><th>What it is</th><th>Status</th></tr></thead>
     <tbody>
-      <tr><td>n8n</td><td>Workflow automation + AI agents</td><td><span class="tag pro">staged · docker</span></td></tr>
-      <tr><td>OpenMuse</td><td>Personal agent (browser/terminal/files)</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>In-browser chat</td><td>wllama, Anubhav Gain</td><td><span class="tag live">github pages</span></td></tr>
+      <tr><td>n8n</td><td>Workflow automation and agents</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>OpenMuse</td><td>Personal agent</td><td><span class="tag pro">staged · docker</span></td></tr>
       <tr><td>Flowise</td><td>Visual agent builder</td><td><span class="tag pro">staged · docker</span></td></tr>
       <tr><td>Langflow</td><td>Visual agent builder</td><td><span class="tag pro">staged · docker</span></td></tr>
-      <tr><td>Open WebUI</td><td>Self-hosted chat UI + Ollama</td><td><span class="tag pro">staged · local-chat</span></td></tr>
-      <tr><td>AnythingLLM</td><td>RAG workspace + agents</td><td><span class="tag pro">staged · docker</span></td></tr>
-      <tr><td>LobeChat</td><td>Chat platform + agent market</td><td><span class="tag pro">staged · docker</span></td></tr>
-      <tr><td>In-browser LLMs</td><td>wllama chat</td><td><span class="tag live">in repo · Anubhav Gain</span></td></tr>
-      <tr><td>Dify</td><td>LLM app platform</td><td><span class="tag alt">multi-service · needs compose host</span></td></tr>
+      <tr><td>Open WebUI</td><td>Chat UI and Ollama</td><td><span class="tag pro">staged · local-chat</span></td></tr>
+      <tr><td>AnythingLLM</td><td>RAG workspace</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>LobeChat</td><td>Chat UI and agent catalog</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>Dify</td><td>LLM app platform</td><td><span class="tag alt">needs Compose</span></td></tr>
       <tr><td>OpenHands</td><td>Autonomous dev agent</td><td><span class="tag alt">needs Docker-in-Docker</span></td></tr>
-      <tr><td>AutoGPT</td><td>Autonomous agent platform</td><td><span class="tag alt">needs DB+Redis+Meili</span></td></tr>
-      <tr><td>CrewAI / AutoGen</td><td>Agent orchestration frameworks</td><td><span class="tag alt">libraries — used inside n8n/Flowise</span></td></tr>
-      <tr><td>Letta</td><td>Memory agents (MemGPT)</td><td><span class="tag alt">v1 server archived; local-first now</span></td></tr>
-      <tr><td>LibreChat</td><td>Multi-provider chat UI</td><td><span class="tag alt">needs MongoDB</span></td></tr>
+      <tr><td>AutoGPT</td><td>Autonomous agent platform</td><td><span class="tag alt">needs DB, Redis, Meili</span></td></tr>
+      <tr><td>CrewAI / AutoGen</td><td>Orchestration libraries</td><td><span class="tag alt">use inside n8n or Flowise</span></td></tr>
+      <tr><td>Letta</td><td>Memory agents</td><td><span class="tag alt">local-first, not this layout</span></td></tr>
+      <tr><td>LibreChat</td><td>Multi-provider chat</td><td><span class="tag alt">needs MongoDB</span></td></tr>
     </tbody>
   </table>
+  </div>
 </section>
 
 <footer>
   <span>Anubhav Gain</span>
+  <span>Infopercept · Ahmedabad</span>
   <span>repo: github.com/anubhavg-icpl/agent-fleet</span>
+  <span>pages: anubhavg-icpl.github.io/agent-fleet</span>
   <span>docs: setup · services · operations · security · landscape</span>
 </footer>
 

@@ -24,6 +24,7 @@ Five Q4_K_M GGUF models, downloaded once from the Hugging Face CDN:
 Streaming, stop, regenerate, conversations in `localStorage`, system prompt,
 temperature and max tokens, Markdown export, installable PWA.
 
+Hosted page: <https://anubhavg-icpl.github.io/agent-fleet/chat/>.
 Source: [spaces/chat](https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/chat).
 Service notes: [docs/services.md](https://github.com/anubhavg-icpl/agent-fleet/blob/main/docs/services.md).
 Setup: [docs/setup.md](https://github.com/anubhavg-icpl/agent-fleet/blob/main/docs/setup.md).

@@ -28,6 +28,18 @@ you run.
 
 Stop the server with Ctrl+C. This does not publish anything.
 
+## GitHub Pages
+
+The hub and the chat are static files. `.github/workflows/pages.yml` publishes
+them from `main`.
+
+- Hub: <https://anubhavg-icpl.github.io/agent-fleet/>
+- Chat: <https://anubhavg-icpl.github.io/agent-fleet/chat/>
+
+A push that changes `docs/index.html` or `spaces/chat/` republishes both.
+This does not start the Docker services. The chat still downloads model
+weights from the Hugging Face CDN into the browser.
+
 ## Publish the static fleet
 
 You need a Hugging Face token that can create and write Spaces. Create one at

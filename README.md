@@ -17,6 +17,11 @@ GitHub lists this as a fork of [mranv/agent-fleet](https://github.com/mranv/agen
 That account is also Anubhav Gain. Spaces are created under the Hugging Face
 user that owns `state/hf_token`.
 
+GitHub Pages hosts the HTML:
+
+- Hub: <https://anubhavg-icpl.github.io/agent-fleet/>
+- Chat: <https://anubhavg-icpl.github.io/agent-fleet/chat/>
+
 Setup is in [docs/setup.md](docs/setup.md). The knowledge bundle index is
 [index.md](index.md).
 
