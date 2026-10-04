@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent Fleet — live AI infrastructure</title>
+<meta name="description" content="The agent fleet: live AI deployments on Hugging Face Spaces plus a one-command Docker fleet." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c8cff'/%3E%3Cstop offset='1' stop-color='%234dd6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='%230b0d12' stroke='url(%23g)' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='10' fill='url(%23g)'/%3E%3C/svg%3E" />
+<style>
+:root {
+  --bg: #0b0d12; --bg-2: #10131b; --bg-3: #161a24;
+  --line: #232936; --line-2: #2e3646;
+  --text: #e7ecf3; --text-2: #9aa5b5; --text-3: #626d7e;
+  --accent: #7c8cff; --accent2: #4dd6ff;
+  --ok: #3ddc97; --warn: #ffb86b;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-size: 15px; line-height: 1.6;
+}
+.wrap { max-width: 1060px; margin: 0 auto; padding: 48px 24px 80px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header.hero { margin-bottom: 42px; position: relative; }
+.glow {
+  position: absolute; top: -60px; left: -60px; width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(124,140,255,.14), transparent 65%);
+  pointer-events: none;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .22em;
+  color: var(--text-3); text-transform: uppercase; margin-bottom: 10px;
+}
+h1 { font-size: 40px; letter-spacing: -.03em; margin: 0 0 10px; line-height: 1.1; }
+h1 .grad {
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.sub { color: var(--text-2); font-size: 15.5px; max-width: 640px; }
+.meta {
+  display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px;
+  font-family: var(--mono); font-size: 11.5px; color: var(--text-3);
+}
+.meta span b { color: var(--text-2); font-weight: 500; }
+
+section { margin-top: 46px; }
+h2 {
+  font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--text-3); margin: 0 0 4px;
+  display: flex; align-items: center; gap: 10px;
+}
+h2 .live-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--ok);
+  box-shadow: 0 0 10px rgba(61,220,151,.7);
+}
+h2 .pro-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--warn);
+  box-shadow: 0 0 10px rgba(255,184,107,.6);
+}
+.section-sub { color: var(--text-3); font-size: 13px; margin: 0 0 18px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+
+.card {
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px;
+  padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 8px;
+  transition: border-color .15s ease, transform .1s ease;
+}
+a.card { color: var(--text); }
+a.card:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-2px); }
+.card.pro { opacity: .88; }
+.card.pro:hover { border-color: var(--warn); }
+
+.card-top { display: flex; align-items: center; gap: 10px; }
+.card-emoji { font-size: 22px; }
+.card-title { font-weight: 700; font-size: 15.5px; letter-spacing: -.01em; }
+.badge {
+  margin-left: auto; font-family: var(--mono); font-size: 10px;
+  letter-spacing: .08em; padding: 3px 8px; border-radius: 999px;
+  border: 1px solid var(--line-2); color: var(--text-3); white-space: nowrap;
+}
+.badge.live { color: var(--ok); border-color: rgba(61,220,151,.35); }
+.badge.pro { color: var(--warn); border-color: rgba(255,184,107,.35); }
+.badge.new { color: var(--accent2); border-color: rgba(77,214,255,.4); }
+.card-desc { color: var(--text-2); font-size: 13.5px; flex: 1; }
+.card-tech {
+  font-family: var(--mono); font-size: 11px; color: var(--text-3);
+  border-top: 1px solid var(--line); padding-top: 10px; margin-top: 4px;
+}
+
+.callout {
+  margin-top: 18px; background: var(--bg-2); border: 1px solid rgba(255,184,107,.3);
+  border-radius: 14px; padding: 16px 18px; font-size: 13.5px; color: var(--text-2);
+}
+.callout b { color: var(--warn); }
+.callout code {
+  font-family: var(--mono); font-size: 12px; background: var(--bg-3);
+  border: 1px solid var(--line-2); border-radius: 6px; padding: 2px 8px; color: #a8c1ff;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  text-align: left; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-3); padding: 10px 12px; border-bottom: 1px solid var(--line-2);
+}
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); color: var(--text-2); }
+td:first-child { color: var(--text); font-weight: 600; }
+.tag {
+  font-family: var(--mono); font-size: 10.5px; padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--line-2); white-space: nowrap;
+}
+.tag.live { color: var(--ok); border-color: rgba(61,220,151,.35); }
+.tag.pro { color: var(--warn); border-color: rgba(255,184,107,.35); }
+.tag.alt { color: var(--text-3); }
+
+footer {
+  margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--line);
+  color: var(--text-3); font-size: 12.5px; font-family: var(--mono);
+  display: flex; flex-wrap: wrap; gap: 18px;
+}
+@media (max-width: 720px) { h1 { font-size: 30px; } .wrap { padding: 32px 16px 60px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="glow"></div>
+  <div class="eyebrow">yeeeeezus · production portfolio</div>
+  <h1>Agent <span class="grad">Fleet</span></h1>
+  <p class="sub">Live AI infrastructure on Hugging Face Spaces — real models, real inference, no mocks —
+  plus a one-command Docker fleet of the agent stack (n8n, Flowise, Langflow, Open WebUI, AnythingLLM,
+  LobeChat, OpenMuse) ready to launch the moment Docker hosting is attached.</p>
+  <div class="meta">
+    <span>status <b>4 live · 7 staged</b></span>
+    <span>account <b>huggingface.co/yeeeeezus</b></span>
+    <span>source <b>github.com/yeeeeezus/agent-fleet</b></span>
+    <span>last verified <b>2026-10-02</b></span>
+  </div>
+</header>
+
+<section>
+  <h2><span class="live-dot"></span>Live now — free, no keys, no signup</h2>
+  <p class="section-sub">Real inference that runs in your browser. Weights stream once from the HF CDN and are cached locally.</p>
+  <div class="grid">
+
+    <a class="card" href="https://yeeeeezus-chat.static.hf.space" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">💬</span><span class="card-title">Chat — Local AI</span><span class="badge live">LIVE</span><span class="badge new">NEW</span></div>
+      <div class="card-desc">Production AI chat, 100% client-side: llama.cpp via WebAssembly in a Web Worker, streaming tokens, stop/regenerate, conversations, system prompts, real tok/s stats, Markdown + code rendering, PWA.</div>
+      <div class="card-tech">wllama · Qwen3 1.7B/0.6B · Qwen2.5 1.5B/0.5B · Llama 3.2 1B · Q4_K_M</div>
+    </a>
+
+    <a class="card" href="https://yeeeeezus-edge-arena.static.hf.space" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">⚔️</span><span class="card-title">Edge Arena</span><span class="badge live">LIVE</span></div>
+      <div class="card-desc">Blind A/B evaluation for sub-1B open models: two anonymous fighters answer side-by-side, you vote, live Elo. Entirely in-browser — one Web Worker per fighter.</div>
+      <div class="card-tech">wllama · Supra2-100M · Qwen3-0.6B · session Elo</div>
+    </a>
+
+    <a class="card" href="https://yeeeeezus-ai-lab.static.hf.space" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">🧪</span><span class="card-title">AI Lab</span><span class="badge live">LIVE</span></div>
+      <div class="card-desc">Transformers.js playground: streamed text generation with chat templates, sentiment analysis, and named-entity recognition — WebGPU when available, WASM otherwise.</div>
+      <div class="card-tech">transformers.js · SmolLM2-135M · Qwen2.5-0.5B · DistilBERT · BERT-NER</div>
+    </a>
+
+    <a class="card" href="https://yeeeeezus-inference.static.hf.space" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">⚡</span><span class="card-title">Inference Index</span><span class="badge live">LIVE</span></div>
+      <div class="card-desc">Semantic search over the 21-tool aisearch index (verified against live GitHub / HF APIs) plus the servable model catalog for this account. Query embeddings run in-tab.</div>
+      <div class="card-tech">all-MiniLM-L6-v2 · WASM · verified 2026-09-30</div>
+    </a>
+
+  </div>
+</section>
+
+<section>
+  <h2><span class="pro-dot"></span>Staged — full agent stack, one command away</h2>
+  <p class="section-sub">Fully packaged Docker Spaces: Dockerfiles, configs, secrets and an idempotent provisioner.</p>
+  <div class="grid">
+
+    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/n8n" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">🔁</span><span class="card-title">n8n</span><span class="badge pro">PRO-READY</span></div>
+      <div class="card-desc">Workflow automation with 400+ integrations and AI agent nodes. Webhook URL pre-wired, encryption key managed as a Space secret, owner account bootstrapped on deploy.</div>
+      <div class="card-tech">docker · port 7860 · secrets: N8N_ENCRYPTION_KEY</div>
+    </a>
+
+    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/local-chat" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">🤖</span><span class="card-title">Local Chat — Open WebUI + Ollama</span><span class="badge pro">PRO-READY</span></div>
+      <div class="card-desc">Zero-config chat with baked-in models: llama3.2:1b, qwen2.5:0.5b, nomic-embed-text for RAG. Includes an OpenAI-compatible API endpoint for the rest of the fleet.</div>
+      <div class="card-tech">docker · supervisord · models baked at build</div>
+    </a>
+
+    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/openmuse" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">🧠</span><span class="card-title">OpenMuse</span><span class="badge pro">PRO-READY</span></div>
+      <div class="card-desc">CopilotKit/OpenMuse — the personal agent with browser, terminal, files and durable work. Full stack: nginx + API (PGlite) + task worker + Playwright Chromium browser worker. Needs a free CopilotKit project key.</div>
+      <div class="card-tech">docker · node 24 · pnpm 11.19 · playwright</div>
+    </a>
+
+    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/flowise" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">🧩</span><span class="card-title">Flowise</span><span class="badge pro">PRO-READY</span></div>
+      <div class="card-desc">Visual LLM agent builder: drag-and-drop agents, tools, memory, RAG pipelines; every chatflow becomes a REST API. Basic-auth gated via Space secrets.</div>
+      <div class="card-tech">docker · node 20 · secrets: FLOWISE_USER/PASS</div>
+    </a>
+
+    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/langflow" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">🌊</span><span class="card-title">Langflow</span><span class="badge pro">PRO-READY</span></div>
+      <div class="card-desc">Visual agent & workflow builder; every flow is an instant REST endpoint. Superuser provisioned from a Space secret on first boot.</div>
+      <div class="card-tech">docker · port 7860 · secret: LANGFLOW_SUPERUSER_PASSWORD</div>
+    </a>
+
+    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/anythingllm" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">📚</span><span class="card-title">AnythingLLM</span><span class="badge pro">PRO-READY</span></div>
+      <div class="card-desc">All-in-one RAG workspace: drop documents into workspaces, chat with citations, built-in AI agents (web-browsing, SQL, custom).</div>
+      <div class="card-tech">docker · port 3001 · first-run wizard</div>
+    </a>
+
+    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/lobechat" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">💠</span><span class="card-title">LobeChat</span><span class="badge pro">PRO-READY</span></div>
+      <div class="card-desc">Polished ChatGPT-style UI with agent marketplace, plugins, vision and artifacts. Access-code gated; API keys stay client-side.</div>
+      <div class="card-tech">docker · port 3210 · secret: ACCESS_CODE</div>
+    </a>
+
+  </div>
+
+  <div class="callout">
+    <b>Why staged?</b> Hugging Face now requires a <b>PRO subscription</b> to host Docker/Gradio Spaces on
+    free hardware (verified: <code>402 Payment Required</code> on <code>api/repos/create</code>, 2026-10-02).
+    Everything is packaged and idempotent — attach PRO (or any Docker host) and run
+    <code>python deploy.py</code> from the repo to bring all seven up in ~15 minutes.
+    Static Spaces, like the four live ones above, remain free.
+  </div>
+</section>
+
+<section>
+  <h2>The top-20 agent landscape</h2>
+  <p class="section-sub">Where each popular platform lives in this fleet.</p>
+  <table>
+    <thead><tr><th>Platform</th><th>What it is</th><th>Status in this fleet</th></tr></thead>
+    <tbody>
+      <tr><td>n8n</td><td>Workflow automation + AI agents</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>OpenMuse</td><td>Personal agent (browser/terminal/files)</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>Flowise</td><td>Visual agent builder</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>Langflow</td><td>Visual agent builder</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>Open WebUI</td><td>Self-hosted chat UI + Ollama</td><td><span class="tag pro">staged · local-chat</span></td></tr>
+      <tr><td>AnythingLLM</td><td>RAG workspace + agents</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>LobeChat</td><td>Chat platform + agent market</td><td><span class="tag pro">staged · docker</span></td></tr>
+      <tr><td>In-browser LLMs</td><td>wllama / transformers.js</td><td><span class="tag live">live · 4 spaces</span></td></tr>
+      <tr><td>Dify</td><td>LLM app platform</td><td><span class="tag alt">multi-service · needs compose host</span></td></tr>
+      <tr><td>OpenHands</td><td>Autonomous dev agent</td><td><span class="tag alt">needs Docker-in-Docker</span></td></tr>
+      <tr><td>AutoGPT</td><td>Autonomous agent platform</td><td><span class="tag alt">needs DB+Redis+Meili</span></td></tr>
+      <tr><td>CrewAI / AutoGen</td><td>Agent orchestration frameworks</td><td><span class="tag alt">libraries — used inside n8n/Flowise</span></td></tr>
+      <tr><td>Letta</td><td>Memory agents (MemGPT)</td><td><span class="tag alt">v1 server archived; local-first now</span></td></tr>
+      <tr><td>LibreChat</td><td>Multi-provider chat UI</td><td><span class="tag alt">needs MongoDB</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<footer>
+  <span>repo: github.com/yeeeeezus/agent-fleet</span>
+  <span>docs: SERVICES · OPERATIONS · SECURITY · LANDSCAPE</span>
+  <span>built 2026-10-02</span>
+</footer>
+
+</div>
+</body>
+</html>

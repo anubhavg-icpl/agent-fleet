@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Chat — local AI in your browser | yeeeeezus</title>
+<meta name="description" content="Production AI chat that runs 100% in your browser: llama.cpp via WebAssembly, real open models, zero API keys, zero servers." />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ sidebar ============ -->
+  <aside id="sidebar">
+    <div class="side-head">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name">CHAT</span>
+      </div>
+      <button id="btn-new" class="btn-new" title="New chat (Ctrl+K)">＋ New chat</button>
+    </div>
+    <div id="conv-list" class="conv-list" aria-label="Conversations"></div>
+    <div class="side-foot">
+      <a class="fleet-link" href="https://yeeeeezus-agent-hub.static.hf.space" target="_blank" rel="noopener">Agent Fleet ↗</a>
+      <div class="privacy-note">Runs 100% in your browser.<br />No API keys · no servers · no tracking.</div>
+    </div>
+  </aside>
+
+  <!-- ============ main ============ -->
+  <main id="main">
+    <header id="topbar">
+      <button id="btn-menu" class="icon-btn" title="Menu" aria-label="Toggle sidebar">☰</button>
+      <div class="model-wrap">
+        <select id="model-select" aria-label="Model"></select>
+        <span id="model-note" class="model-note"></span>
+      </div>
+      <div id="status" class="status" data-state="idle"><span class="dot"></span><span id="status-text">idle</span></div>
+      <div class="topbar-actions">
+        <button id="btn-settings" class="icon-btn" title="System prompt & parameters" aria-label="Settings">⚙</button>
+        <button id="btn-export" class="icon-btn" title="Export conversation" aria-label="Export">⤓</button>
+      </div>
+    </header>
+
+    <div id="dl-progress" class="dl-progress" hidden>
+      <div class="dl-bar"><div id="dl-fill" class="dl-fill"></div></div>
+      <div id="dl-text" class="dl-text">Downloading model…</div>
+    </div>
+
+    <div id="messages" class="messages" aria-live="polite">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-glow"></div>
+        <h1>Local AI. Zero setup.</h1>
+        <p>Pick a model and start talking. Weights (~400 MB–1.1 GB) download once from the Hugging&nbsp;Face CDN and are cached by your browser — after that, inference is instant and fully offline-capable.</p>
+        <div class="empty-chips">
+          <button class="chip" data-fill="Explain how transformers work, simply.">Explain transformers</button>
+          <button class="chip" data-fill="Write a Python function that finds prime numbers.">Write code</button>
+          <button class="chip" data-fill="Give me 5 ideas for a weekend project.">Brainstorm</button>
+        </div>
+      </div>
+    </div>
+
+    <footer id="composer">
+      <div class="input-pill">
+        <textarea id="input" rows="1" placeholder="Message… (Enter to send, Shift+Enter for newline)" autofocus></textarea>
+        <button id="btn-send" class="send-btn" title="Send (Enter)" aria-label="Send">➤</button>
+        <button id="btn-stop" class="stop-btn" title="Stop (Esc)" aria-label="Stop generating" hidden>■</button>
+      </div>
+      <div class="composer-meta">
+        <span id="hint" class="hint">llama.cpp · WebAssembly · models cached locally</span>
+        <span id="ctx-note" class="hint"></span>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<!-- ============ settings drawer ============ -->
+<div id="settings-backdrop" class="backdrop" hidden></div>
+<div id="settings" class="settings" hidden>
+  <div class="settings-head">
+    <h2>Model settings</h2>
+    <button id="btn-settings-close" class="icon-btn" aria-label="Close">✕</button>
+  </div>
+  <label class="field">
+    <span class="field-label">System prompt</span>
+    <textarea id="sys-prompt" rows="4" placeholder="You are a helpful assistant."></textarea>
+  </label>
+  <label class="field">
+    <span class="field-label">Temperature <b id="temp-val">0.7</b></span>
+    <input id="temp" type="range" min="0" max="1.5" step="0.05" value="0.7" />
+  </label>
+  <label class="field">
+    <span class="field-label">Max tokens <b id="maxtok-val">768</b></span>
+    <input id="maxtok" type="range" min="128" max="2048" step="64" value="768" />
+  </label>
+  <div class="field-actions">
+    <button id="btn-apply-settings" class="btn-primary">Apply</button>
+    <button id="btn-reset-settings" class="btn-ghost">Reset defaults</button>
+  </div>
+</div>
+
+<!-- rename modal -->
+<div id="rename-backdrop" class="backdrop" hidden></div>
+<div id="rename" class="modal" hidden>
+  <h2>Rename conversation</h2>
+  <input id="rename-input" type="text" maxlength="80" />
+  <div class="field-actions">
+    <button id="btn-rename-save" class="btn-primary">Save</button>
+    <button id="btn-rename-cancel" class="btn-ghost">Cancel</button>
+  </div>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>

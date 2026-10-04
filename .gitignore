@@ -1,0 +1,12 @@
+# state / secrets
+state/
+*.token
+*_token
+.env
+.env.*
+*.local
+__pycache__/
+*.pyc
+.DS_Store
+chat-render.png
+chat-generation.png
