@@ -6,6 +6,8 @@ colorTo: pink
 sdk: docker
 app_port: 3210
 pinned: true
+type: Hugging Face Space
+description: Chat UI gated by an access code.
 ---
 
 # LobeChat

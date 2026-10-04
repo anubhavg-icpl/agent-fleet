@@ -6,6 +6,8 @@ colorTo: blue
 sdk: static
 pinned: true
 short_description: Real AI chat, 100% in-browser — llama.cpp WASM, zero servers
+type: Hugging Face Space
+description: In-browser llama.cpp chat. Five GGUF models, no server.
 ---
 
 # Chat — local AI in the browser
@@ -23,4 +25,5 @@ Streaming, stop, regenerate, conversations in `localStorage`, system prompt,
 temperature and max tokens, Markdown export, installable PWA.
 
 Source: [spaces/chat](https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/chat).
-Service notes: [docs/SERVICES.md](https://github.com/anubhavg-icpl/agent-fleet/blob/main/docs/SERVICES.md).
+Service notes: [docs/services.md](https://github.com/anubhavg-icpl/agent-fleet/blob/main/docs/services.md).
+Setup: [docs/setup.md](https://github.com/anubhavg-icpl/agent-fleet/blob/main/docs/setup.md).

@@ -1,20 +1,25 @@
+---
+type: Playbook
+title: Operations
+description: Update the fleet, keep data, and add a service.
+resource: https://github.com/anubhavg-icpl/agent-fleet/blob/main/deploy.py
+tags: [operations, deploy]
+status: stable
+generated: { by: human:anubhav-gain, at: 2026-10-04T00:00:00Z }
+---
+
 # Operations
 
 Commands assume the checkout is [anubhavg-icpl/agent-fleet](https://github.com/anubhavg-icpl/agent-fleet)
 and the shell is PowerShell. `deploy.py` is idempotent: a second run uploads the
 current tree and writes the same secrets again.
 
-## 1. Point the provisioner at this machine
+First-time setup, including the local chat server, is in [setup.md](setup.md).
 
-`STATE_DIR` in `deploy.py` is still the upstream path
-`/home/z/my-project/revenue-agent/state`. The token is read when the module
-loads, before argparse runs. On this fork, set:
+## 1. Put the token next to the repo
 
-```python
-STATE_DIR = Path(__file__).resolve().parent / "state"
-```
-
-Then:
+`STATE_DIR` is `state/` inside this checkout. The token is read when the
+script starts, after argument parsing. `--help` does not need the file.
 
 ```powershell
 py -3 -m pip install huggingface_hub
@@ -29,22 +34,20 @@ Hugging Face account. `state/` matches `.gitignore`, and so does the filename
 `--status` needs the token too. `whoami()` is how the script learns the owner
 segment of every URL.
 
-## 2. Retarget upstream names before you publish
+## 2. Names already set on this fork
 
-These files still advertise the account this fork was copied from. `deploy.py`
-will upload them as-is.
+The hub and the chat name Anubhav Gain and link to
+`github.com/anubhavg-icpl/agent-fleet`. OpenMuse's `PUBLIC_URL`,
+`PUBLIC_API_URL`, and `ALLOWED_ORIGINS` are
+`https://anubhavg-icpl-openmuse.hf.space`.
 
-| File | What to change |
-|---|---|
-| `docs/index.html` | Eyebrow, account, GitHub links, and the chat card. This file is what the hub Space serves. |
-| `spaces/chat/index.html` | `<title>` and the Agent Fleet link in the sidebar. |
-| `spaces/openmuse/Dockerfile` | `ARG PUBLIC_URL`, `PUBLIC_API_URL`, and `ALLOWED_ORIGINS`. Set all three to `https://<hf-user>-openmuse.hf.space`. |
+`deploy.py` prints the Hugging Face username of the token. If that name is not
+`anubhavg-icpl`, change those three Dockerfile values to
+`https://<hf-user>-openmuse.hf.space` before `py -3 deploy.py --docker`.
+The web bundle inlines `PUBLIC_URL` at image build time.
 
 `deploy.py` copies `docs/index.html` over `spaces/agent-hub/index.html` on every
 static deploy. Editing only the copy under `spaces/agent-hub/` does not stick.
-
-Leave the three cards for Edge Arena, AI Lab, and Inference Index out of the hub
-until their source is in this repo. They are not provisioned from here.
 
 ## 3. Provision
 
@@ -84,7 +87,9 @@ the image build (`ollama pull`, a full OpenMuse `pnpm` build).
 ## 5. Add a service
 
 1. `spaces/<name>/README.md` with Hugging Face front matter. Docker cards need
-   `sdk: docker` and `app_port` equal to the port the process binds.
+   `sdk: docker` and `app_port` equal to the port the process binds. Keep that
+   filename as `README.md`. Add `type` and `description` in the same YAML block.
+   Do not add an OKF `tags` list there. Hugging Face uses `tags` as Space tags.
 2. `spaces/<name>/Dockerfile` listening on `0.0.0.0` at that port.
 3. An entry in `build_docker_fleet()` if the service needs secrets or variables.
 4. `py -3 deploy.py --docker`.
@@ -120,10 +125,18 @@ Invoke-WebRequest -UseBasicParsing https://<hf-user>-n8n.hf.space/healthz | Out-
 
 | Symptom | Cause |
 |---|---|
-| Crash at import, `hf_token` not found | `STATE_DIR` still points at `/home/z/...`, or `state\hf_token` is missing. |
+| Exit: missing `state\hf_token` | The token file is absent or empty. |
 | `401` from the Hub API | Token is invalid or lacks write access to this user's Spaces. |
 | `402` printed, service skipped | Docker Spaces need PRO. Static deploy is unaffected. |
 | Static site 404 on `https://<user>-<name>.hf.space` | Static Spaces use the `.static.hf.space` host. The bare host is for Docker. |
-| OpenMuse UI calls another account | `PUBLIC_URL` was baked as the upstream host. Fix the Dockerfile and rebuild. |
+| OpenMuse UI calls another host | `PUBLIC_URL` does not match the Space URL from `whoami()`. Change the Dockerfile and rebuild. |
 | OpenMuse API never becomes useful | `CPK_INTELLIGENCE_API_KEY` or `OPENAI_API_KEY` is still `SET_ME`. |
 | `BUILD_ERROR` in Space logs | Read the build log. A Docker Hub rate limit clears by retrying later. An upstream tag that moved needs a pin in the Dockerfile. |
+
+# Examples
+
+Poll the two static URLs after a deploy:
+
+```powershell
+py -3 deploy.py --status
+```

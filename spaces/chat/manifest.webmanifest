@@ -1,7 +1,7 @@
 {
-  "name": "Chat — local AI in your browser",
-  "short_name": "Chat",
-  "description": "AI chat that runs 100% in your browser: llama.cpp WASM, real open models, zero servers.",
+  "name": "Anubhav Gain — local AI",
+  "short_name": "Anubhav Gain",
+  "description": "Anubhav Gain's AI chat. It runs 100% in your browser: llama.cpp WASM, real open models, zero servers.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0b0d12",

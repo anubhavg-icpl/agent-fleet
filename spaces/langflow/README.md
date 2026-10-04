@@ -6,6 +6,8 @@ colorTo: purple
 sdk: docker
 app_port: 7860
 pinned: true
+type: Hugging Face Space
+description: Visual agent builder. The superuser name is langflow.
 ---
 
 # Langflow

@@ -6,6 +6,8 @@ colorTo: gray
 sdk: docker
 app_port: 7860
 pinned: true
+type: Hugging Face Space
+description: Workflow automation. The owner account is created on first visit.
 ---
 
 # n8n

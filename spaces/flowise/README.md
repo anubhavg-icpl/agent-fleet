@@ -6,6 +6,8 @@ colorTo: blue
 sdk: docker
 app_port: 7860
 pinned: true
+type: Hugging Face Space
+description: Visual agent builder. Sign in as fleet-admin.
 ---
 
 # Flowise

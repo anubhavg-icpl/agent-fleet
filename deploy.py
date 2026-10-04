@@ -29,13 +29,19 @@ import sys
 import time
 from pathlib import Path
 
-from huggingface_hub import HfApi
-
-STATE_DIR = Path("/home/z/my-project/revenue-agent/state")
 FLEET_DIR = Path(__file__).resolve().parent
+STATE_DIR = FLEET_DIR / "state"
 CRED_FILE = STATE_DIR / "agent-fleet-credentials.json"
 
-HF_TOKEN = STATE_DIR.joinpath("hf_token").read_text().strip()
+
+def hf_token() -> str:
+    path = STATE_DIR / "hf_token"
+    if not path.is_file():
+        sys.exit(f"missing {path}\nPut a Hugging Face write token in that file, one line.")
+    token = path.read_text(encoding="utf-8").strip()
+    if not token:
+        sys.exit(f"{path} is empty")
+    return token
 
 
 def rand_alnum(n: int) -> str:
@@ -205,7 +211,12 @@ def main() -> int:
     ap.add_argument("--status", action="store_true", help="print status only")
     args = ap.parse_args()
 
-    api = HfApi(token=HF_TOKEN)
+    token = hf_token()
+    try:
+        from huggingface_hub import HfApi
+    except ImportError:
+        sys.exit("missing huggingface_hub — py -3 -m pip install huggingface_hub")
+    api = HfApi(token=token)
     owner = api.whoami()["name"]
     print(f"owner: {owner}\n")
 

@@ -24,7 +24,7 @@ RUN git clone --depth 1 https://github.com/CopilotKit/openmuse.git . \
 # Web UI: EXPO_PUBLIC_API_URL is INLINED into the bundle at build time,
 # so it must be the final public URL of this Space. (--clear avoids a cached
 # Metro transform keeping a stale URL.)
-ARG PUBLIC_URL=https://yeeeeezus-openmuse.hf.space
+ARG PUBLIC_URL=https://anubhavg-icpl-openmuse.hf.space
 RUN EXPO_PUBLIC_API_URL=${PUBLIC_URL} pnpm --dir apps/mobile exec expo export --platform web --output-dir /web --clear
 
 # Pruned production bundle for the API server.
@@ -56,8 +56,8 @@ RUN useradd -m pwuser \
 
 ENV HOST=127.0.0.1 \
     PORT=8787 \
-    PUBLIC_API_URL=https://yeeeeezus-openmuse.hf.space \
-    ALLOWED_ORIGINS=https://yeeeeezus-openmuse.hf.space \
+    PUBLIC_API_URL=https://anubhavg-icpl-openmuse.hf.space \
+    ALLOWED_ORIGINS=https://anubhavg-icpl-openmuse.hf.space \
     WORKSPACE_MODE=live \
     AGENT_BACKEND=model \
     MODEL=openai/gpt-5 \

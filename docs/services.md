@@ -1,8 +1,19 @@
+---
+type: Reference
+title: Services
+description: Models, ports, and secrets for each service in this fleet.
+resource: https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces
+tags: [services, ports, secrets]
+status: stable
+generated: { by: human:anubhav-gain, at: 2026-10-04T00:00:00Z }
+---
+
 # Services
 
 Owned by [anubhavg-icpl/agent-fleet](https://github.com/anubhavg-icpl/agent-fleet).
 Ports, models, and secrets below match the Dockerfiles and `deploy.py` in this
-fork. Nothing here is live until you run the provisioner with your own token.
+repo. Nothing here is live until you run the provisioner with your own token.
+First-time commands are in [setup.md](setup.md).
 
 Static URL shape: `https://<hf-user>-<name>.static.hf.space`
 Docker URL shape: `https://<hf-user>-<name>.hf.space`
@@ -41,8 +52,8 @@ Static Space. `deploy.py` copies `docs/index.html` onto
 `spaces/agent-hub/index.html` before upload, so the page you edit for the
 dashboard is `docs/index.html`.
 
-That HTML still names the upstream account. Retarget it before this hub is the
-public face of anubhavg-icpl. See [OPERATIONS.md](OPERATIONS.md).
+The page names Anubhav Gain and links this repository. It does not link
+Edge Arena, AI Lab, or the Inference Index.
 
 ## n8n — `spaces/n8n/`
 
@@ -109,11 +120,10 @@ CopilotKit project key comes from `npx copilotkit@latest login` and
 `openai/gpt-5`. Change `MODEL` there if you want a different id.
 
 The image clones [CopilotKit/openmuse](https://github.com/CopilotKit/openmuse)
-at build time. `ARG PUBLIC_URL` is inlined into the web bundle. In this fork
-that argument, plus `PUBLIC_API_URL` and `ALLOWED_ORIGINS`, still point at
-`https://yeeeeezus-openmuse.hf.space`. Change all three to
-`https://<hf-user>-openmuse.hf.space` before `python deploy.py --docker`, or
-the UI will call the upstream host.
+at build time. `ARG PUBLIC_URL` is inlined into the web bundle. This fork sets
+that argument, `PUBLIC_API_URL`, and `ALLOWED_ORIGINS` to
+`https://anubhavg-icpl-openmuse.hf.space`. If `deploy.py` prints a different
+Hugging Face username, change all three before `py -3 deploy.py --docker`.
 
 Gmail and Calendar need your own `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`.
 Callback: `https://<hf-user>-openmuse.hf.space/api/google/callback`.

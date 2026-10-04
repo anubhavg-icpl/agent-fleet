@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Agent Fleet — live AI infrastructure</title>
-<meta name="description" content="The agent fleet: live AI deployments on Hugging Face Spaces plus a one-command Docker fleet." />
+<title>Agent Fleet — Anubhav Gain</title>
+<meta name="description" content="Anubhav Gain's agent fleet: in-browser AI chat plus a one-command Docker stack." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c8cff'/%3E%3Cstop offset='1' stop-color='%234dd6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='%230b0d12' stroke='url(%23g)' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='10' fill='url(%23g)'/%3E%3C/svg%3E" />
 <style>
 :root {
@@ -130,46 +130,28 @@ footer {
 
 <header class="hero">
   <div class="glow"></div>
-  <div class="eyebrow">yeeeeezus · production portfolio</div>
+  <div class="eyebrow">Anubhav Gain</div>
   <h1>Agent <span class="grad">Fleet</span></h1>
-  <p class="sub">Live AI infrastructure on Hugging Face Spaces — real models, real inference, no mocks —
-  plus a one-command Docker fleet of the agent stack (n8n, Flowise, Langflow, Open WebUI, AnythingLLM,
-  LobeChat, OpenMuse) ready to launch the moment Docker hosting is attached.</p>
+  <p class="sub">Security software engineer at Infopercept, Ahmedabad.
+  The chat runs in the browser. The Docker stack (n8n, Flowise, Langflow,
+  Open WebUI, AnythingLLM, LobeChat, OpenMuse) is packaged to launch when
+  Docker hosting is attached.</p>
   <div class="meta">
-    <span>status <b>4 live · 7 staged</b></span>
-    <span>account <b>huggingface.co/yeeeeezus</b></span>
-    <span>source <b>github.com/yeeeeezus/agent-fleet</b></span>
-    <span>last verified <b>2026-10-02</b></span>
+    <span>operator <b>Anubhav Gain</b></span>
+    <span>source <b>github.com/anubhavg-icpl/agent-fleet</b></span>
+    <span>status <b>chat in repo · 7 staged</b></span>
   </div>
 </header>
 
 <section>
-  <h2><span class="live-dot"></span>Live now — free, no keys, no signup</h2>
-  <p class="section-sub">Real inference that runs in your browser. Weights stream once from the HF CDN and are cached locally.</p>
+  <h2><span class="live-dot"></span>In the browser — no keys, no signup</h2>
+  <p class="section-sub">Anubhav Gain's chat. Weights stream once from the HF CDN and stay in the browser.</p>
   <div class="grid">
 
-    <a class="card" href="https://yeeeeezus-chat.static.hf.space" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">💬</span><span class="card-title">Chat — Local AI</span><span class="badge live">LIVE</span><span class="badge new">NEW</span></div>
-      <div class="card-desc">Production AI chat, 100% client-side: llama.cpp via WebAssembly in a Web Worker, streaming tokens, stop/regenerate, conversations, system prompts, real tok/s stats, Markdown + code rendering, PWA.</div>
+    <a class="card" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/chat" target="_blank" rel="noopener">
+      <div class="card-top"><span class="card-emoji">💬</span><span class="card-title">Chat — Anubhav Gain</span><span class="badge live">IN REPO</span></div>
+      <div class="card-desc">Local AI chat, 100% client-side: llama.cpp via WebAssembly in a Web Worker, streaming tokens, stop/regenerate, conversations, system prompts, real tok/s stats, Markdown + code rendering, PWA.</div>
       <div class="card-tech">wllama · Qwen3 1.7B/0.6B · Qwen2.5 1.5B/0.5B · Llama 3.2 1B · Q4_K_M</div>
-    </a>
-
-    <a class="card" href="https://yeeeeezus-edge-arena.static.hf.space" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">⚔️</span><span class="card-title">Edge Arena</span><span class="badge live">LIVE</span></div>
-      <div class="card-desc">Blind A/B evaluation for sub-1B open models: two anonymous fighters answer side-by-side, you vote, live Elo. Entirely in-browser — one Web Worker per fighter.</div>
-      <div class="card-tech">wllama · Supra2-100M · Qwen3-0.6B · session Elo</div>
-    </a>
-
-    <a class="card" href="https://yeeeeezus-ai-lab.static.hf.space" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">🧪</span><span class="card-title">AI Lab</span><span class="badge live">LIVE</span></div>
-      <div class="card-desc">Transformers.js playground: streamed text generation with chat templates, sentiment analysis, and named-entity recognition — WebGPU when available, WASM otherwise.</div>
-      <div class="card-tech">transformers.js · SmolLM2-135M · Qwen2.5-0.5B · DistilBERT · BERT-NER</div>
-    </a>
-
-    <a class="card" href="https://yeeeeezus-inference.static.hf.space" target="_blank" rel="noopener">
-      <div class="card-top"><span class="card-emoji">⚡</span><span class="card-title">Inference Index</span><span class="badge live">LIVE</span></div>
-      <div class="card-desc">Semantic search over the 21-tool aisearch index (verified against live GitHub / HF APIs) plus the servable model catalog for this account. Query embeddings run in-tab.</div>
-      <div class="card-tech">all-MiniLM-L6-v2 · WASM · verified 2026-09-30</div>
     </a>
 
   </div>
@@ -180,43 +162,43 @@ footer {
   <p class="section-sub">Fully packaged Docker Spaces: Dockerfiles, configs, secrets and an idempotent provisioner.</p>
   <div class="grid">
 
-    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/n8n" target="_blank" rel="noopener">
+    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/n8n" target="_blank" rel="noopener">
       <div class="card-top"><span class="card-emoji">🔁</span><span class="card-title">n8n</span><span class="badge pro">PRO-READY</span></div>
-      <div class="card-desc">Workflow automation with 400+ integrations and AI agent nodes. Webhook URL pre-wired, encryption key managed as a Space secret, owner account bootstrapped on deploy.</div>
+      <div class="card-desc">Workflow automation with 400+ integrations and AI agent nodes. Webhook URL is set on deploy. The encryption key is a Space secret. The first visit creates the owner account.</div>
       <div class="card-tech">docker · port 7860 · secrets: N8N_ENCRYPTION_KEY</div>
     </a>
 
-    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/local-chat" target="_blank" rel="noopener">
+    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/local-chat" target="_blank" rel="noopener">
       <div class="card-top"><span class="card-emoji">🤖</span><span class="card-title">Local Chat — Open WebUI + Ollama</span><span class="badge pro">PRO-READY</span></div>
       <div class="card-desc">Zero-config chat with baked-in models: llama3.2:1b, qwen2.5:0.5b, nomic-embed-text for RAG. Includes an OpenAI-compatible API endpoint for the rest of the fleet.</div>
       <div class="card-tech">docker · supervisord · models baked at build</div>
     </a>
 
-    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/openmuse" target="_blank" rel="noopener">
+    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/openmuse" target="_blank" rel="noopener">
       <div class="card-top"><span class="card-emoji">🧠</span><span class="card-title">OpenMuse</span><span class="badge pro">PRO-READY</span></div>
       <div class="card-desc">CopilotKit/OpenMuse — the personal agent with browser, terminal, files and durable work. Full stack: nginx + API (PGlite) + task worker + Playwright Chromium browser worker. Needs a free CopilotKit project key.</div>
       <div class="card-tech">docker · node 24 · pnpm 11.19 · playwright</div>
     </a>
 
-    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/flowise" target="_blank" rel="noopener">
+    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/flowise" target="_blank" rel="noopener">
       <div class="card-top"><span class="card-emoji">🧩</span><span class="card-title">Flowise</span><span class="badge pro">PRO-READY</span></div>
       <div class="card-desc">Visual LLM agent builder: drag-and-drop agents, tools, memory, RAG pipelines; every chatflow becomes a REST API. Basic-auth gated via Space secrets.</div>
-      <div class="card-tech">docker · node 20 · secrets: FLOWISE_USER/PASS</div>
+      <div class="card-tech">docker · node 20 · secrets: FLOWISE_USERNAME / FLOWISE_PASSWORD</div>
     </a>
 
-    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/langflow" target="_blank" rel="noopener">
+    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/langflow" target="_blank" rel="noopener">
       <div class="card-top"><span class="card-emoji">🌊</span><span class="card-title">Langflow</span><span class="badge pro">PRO-READY</span></div>
       <div class="card-desc">Visual agent & workflow builder; every flow is an instant REST endpoint. Superuser provisioned from a Space secret on first boot.</div>
       <div class="card-tech">docker · port 7860 · secret: LANGFLOW_SUPERUSER_PASSWORD</div>
     </a>
 
-    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/anythingllm" target="_blank" rel="noopener">
+    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/anythingllm" target="_blank" rel="noopener">
       <div class="card-top"><span class="card-emoji">📚</span><span class="card-title">AnythingLLM</span><span class="badge pro">PRO-READY</span></div>
       <div class="card-desc">All-in-one RAG workspace: drop documents into workspaces, chat with citations, built-in AI agents (web-browsing, SQL, custom).</div>
       <div class="card-tech">docker · port 3001 · first-run wizard</div>
     </a>
 
-    <a class="card pro" href="https://github.com/yeeeeezus/agent-fleet/tree/main/spaces/lobechat" target="_blank" rel="noopener">
+    <a class="card pro" href="https://github.com/anubhavg-icpl/agent-fleet/tree/main/spaces/lobechat" target="_blank" rel="noopener">
       <div class="card-top"><span class="card-emoji">💠</span><span class="card-title">LobeChat</span><span class="badge pro">PRO-READY</span></div>
       <div class="card-desc">Polished ChatGPT-style UI with agent marketplace, plugins, vision and artifacts. Access-code gated; API keys stay client-side.</div>
       <div class="card-tech">docker · port 3210 · secret: ACCESS_CODE</div>
@@ -229,7 +211,7 @@ footer {
     free hardware (verified: <code>402 Payment Required</code> on <code>api/repos/create</code>, 2026-10-02).
     Everything is packaged and idempotent — attach PRO (or any Docker host) and run
     <code>python deploy.py</code> from the repo to bring all seven up in ~15 minutes.
-    Static Spaces, like the four live ones above, remain free.
+    The browser chat above stays a static site and does not need PRO.
   </div>
 </section>
 
@@ -246,7 +228,7 @@ footer {
       <tr><td>Open WebUI</td><td>Self-hosted chat UI + Ollama</td><td><span class="tag pro">staged · local-chat</span></td></tr>
       <tr><td>AnythingLLM</td><td>RAG workspace + agents</td><td><span class="tag pro">staged · docker</span></td></tr>
       <tr><td>LobeChat</td><td>Chat platform + agent market</td><td><span class="tag pro">staged · docker</span></td></tr>
-      <tr><td>In-browser LLMs</td><td>wllama / transformers.js</td><td><span class="tag live">live · 4 spaces</span></td></tr>
+      <tr><td>In-browser LLMs</td><td>wllama chat</td><td><span class="tag live">in repo · Anubhav Gain</span></td></tr>
       <tr><td>Dify</td><td>LLM app platform</td><td><span class="tag alt">multi-service · needs compose host</span></td></tr>
       <tr><td>OpenHands</td><td>Autonomous dev agent</td><td><span class="tag alt">needs Docker-in-Docker</span></td></tr>
       <tr><td>AutoGPT</td><td>Autonomous agent platform</td><td><span class="tag alt">needs DB+Redis+Meili</span></td></tr>
@@ -258,9 +240,9 @@ footer {
 </section>
 
 <footer>
-  <span>repo: github.com/yeeeeezus/agent-fleet</span>
-  <span>docs: SERVICES · OPERATIONS · SECURITY · LANDSCAPE</span>
-  <span>built 2026-10-02</span>
+  <span>Anubhav Gain</span>
+  <span>repo: github.com/anubhavg-icpl/agent-fleet</span>
+  <span>docs: setup · services · operations · security · landscape</span>
 </footer>
 
 </div>

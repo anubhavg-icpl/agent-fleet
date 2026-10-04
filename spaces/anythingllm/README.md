@@ -6,6 +6,8 @@ colorTo: green
 sdk: docker
 app_port: 3001
 pinned: true
+type: Hugging Face Space
+description: RAG workspace. The setup wizard creates the admin.
 ---
 
 # AnythingLLM

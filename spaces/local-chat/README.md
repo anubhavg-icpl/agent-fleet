@@ -2,10 +2,12 @@
 title: Local Chat — Zero-Config AI (Open WebUI + Ollama)
 emoji: 🤖
 colorFrom: red
-colorTo: orange
+colorTo: yellow
 sdk: docker
 app_port: 8080
 pinned: true
+type: Hugging Face Space
+description: Open WebUI and Ollama. The Space listens on port 8080.
 ---
 
 # Local Chat — Open WebUI + Ollama

@@ -315,6 +315,7 @@ function renderMessages(streaming = false) {
     empty.innerHTML = `
       <div class="empty-glow"></div>
       <h1>Local AI. Zero setup.</h1>
+      <p class="empty-byline">Anubhav Gain</p>
       <p>Pick a model and start talking. Weights download once from the Hugging Face CDN and are cached by your browser — after that, inference is instant.</p>
       <div class="empty-chips">
         <button class="chip" data-fill="Explain how transformers work, simply.">Explain transformers</button>

@@ -1,14 +1,24 @@
+---
+type: Playbook
+title: Security
+description: Where secrets live and how each app is gated.
+resource: https://github.com/anubhavg-icpl/agent-fleet/blob/main/deploy.py
+tags: [security, secrets]
+status: stable
+generated: { by: human:anubhav-gain, at: 2026-10-04T00:00:00Z }
+---
+
 # Security
 
-This fork is [anubhavg-icpl/agent-fleet](https://github.com/anubhavg-icpl/agent-fleet).
-Secrets belong to the anubhavg-icpl Hugging Face account. The upstream state
-directory and the upstream token are not ours.
+This repo is [anubhavg-icpl/agent-fleet](https://github.com/anubhavg-icpl/agent-fleet),
+Anubhav Gain. Secrets belong in `state/` on this machine and in the Hugging Face
+account that owns the token.
 
 ## Where secrets live
 
 | Secret | Where | In git |
 |---|---|---|
-| Hugging Face token | `state/hf_token` after you retarget `STATE_DIR` | No. `state/` and `*_token` are gitignored. |
+| Hugging Face token | `state/hf_token` | No. `state/` and `*_token` are gitignored. |
 | Generated service secrets | `state/agent-fleet-credentials.json` | No. Same directory. |
 | Runtime copies of those secrets | Hugging Face Space secrets | No. `deploy.py` calls `add_space_secret`. |
 
@@ -59,3 +69,12 @@ change them.
 Deleting the whole credentials file rotates every generated secret on the next
 `--docker` run. Update the passwords you have saved, because Flowise, Langflow,
 LobeChat, and OpenMuse will expect the new values.
+
+# Examples
+
+Rotate only the Flowise password. Delete `flowise_password` from
+`state/agent-fleet-credentials.json`, then:
+
+```powershell
+py -3 deploy.py --docker
+```

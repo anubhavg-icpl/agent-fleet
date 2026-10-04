@@ -1,11 +1,13 @@
 ---
 title: OpenMuse — Personal Agent (Browser · Terminal · Files)
 emoji: 🧠
-colorFrom: violet
+colorFrom: purple
 colorTo: gray
 sdk: docker
 app_port: 7860
 pinned: true
+type: Hugging Face Space
+description: Personal agent with a browser worker. The public URL is baked into the image.
 ---
 
 # OpenMuse
@@ -19,16 +21,10 @@ listens on `127.0.0.1:8790` as user `pwuser`.
 
 ## Before the first build
 
-`PUBLIC_URL`, `PUBLIC_API_URL`, and `ALLOWED_ORIGINS` in the Dockerfile are
-still `https://yeeeeezus-openmuse.hf.space`. The web bundle inlines `PUBLIC_URL`
-at build time. Set all three to:
-
-```text
-https://<hf-user>-openmuse.hf.space
-```
-
-`<hf-user>` is the Hugging Face username of the token `deploy.py` uses. For
-this fork that is `anubhavg-icpl` when the token belongs to that account.
+`PUBLIC_URL`, `PUBLIC_API_URL`, and `ALLOWED_ORIGINS` are
+`https://anubhavg-icpl-openmuse.hf.space`. The web bundle inlines `PUBLIC_URL`
+at build time. If `deploy.py` prints a different Hugging Face username, set
+all three to `https://<hf-user>-openmuse.hf.space` before the image build.
 
 ## Secrets
 

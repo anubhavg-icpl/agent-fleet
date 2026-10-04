@@ -1,3 +1,13 @@
+---
+type: Reference
+title: Landscape
+description: Which agent platforms this repo packages, and which it leaves out.
+resource: https://github.com/anubhavg-icpl/agent-fleet
+tags: [landscape, agents]
+status: stable
+generated: { by: human:anubhav-gain, at: 2026-10-04T00:00:00Z }
+---
+
 # Landscape
 
 What [anubhavg-icpl/agent-fleet](https://github.com/anubhavg-icpl/agent-fleet)
@@ -22,9 +32,7 @@ anubhavg-icpl token.
 CrewAI, AutoGen, LangGraph, and smolagents are libraries. They are not Spaces
 in this repo. A workflow that needs them runs inside n8n or a Flowise code node.
 
-## Linked from the hub page, not built here
-
-`docs/index.html` still points at three upstream static Spaces:
+## Not in this repo
 
 | Name | Why it is not part of this fleet |
 |---|---|
@@ -32,8 +40,7 @@ in this repo. A workflow that needs them runs inside n8n or a Flowise code node.
 | AI Lab | No `spaces/ai-lab/`. transformers.js code is not in this tree. |
 | Inference Index | No `spaces/inference/`. |
 
-Those links are leftover from the fork parent. They are not anubhavg-icpl
-deployments. Remove them from the hub when you retarget `docs/index.html`.
+The hub does not link them.
 
 ## Not packaged, and why
 
