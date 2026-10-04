@@ -2,6 +2,7 @@
 
 ## 2026-10-04
 
+* **Update**: Placed generated WebP plates in the chat and the hub, and refreshed the README pictures.
 * **Update**: Published the hub and the browser chat with GitHub Pages.
 * **Update**: Added lossless WebP pictures of the banner, chat, and hub to the README.
 * **Update**: Renamed the concept files to lowercase and wrote them as Open Knowledge Format 0.2.

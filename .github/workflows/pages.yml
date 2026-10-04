@@ -26,8 +26,9 @@ jobs:
 
       - name: Assemble the static site
         run: |
-          mkdir -p _site/chat
+          mkdir -p _site/chat _site/assets
           cp docs/index.html _site/index.html
+          cp docs/assets/hero.webp docs/assets/mark.webp _site/assets/
           cp spaces/chat/index.html \
              spaces/chat/app.js \
              spaces/chat/chat-worker.js \
@@ -35,6 +36,8 @@ jobs:
              spaces/chat/style.css \
              spaces/chat/icon.svg \
              spaces/chat/manifest.webmanifest \
+             spaces/chat/mark.webp \
+             spaces/chat/plate.webp \
              _site/chat/
           : > _site/.nojekyll
 

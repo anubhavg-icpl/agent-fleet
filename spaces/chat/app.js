@@ -315,6 +315,7 @@ function renderMessages(streaming = false) {
     empty.className = "empty-state";
     empty.id = "empty-state";
     empty.innerHTML = `
+      <figure class="empty-plate"><img src="plate.webp" alt="" width="1200" height="675" /></figure>
       <p class="kicker">01 · Anubhav Gain</p>
       <h1>Local AI.<br />On this machine.</h1>
       <p class="lede">Security software engineer at Infopercept, Ahmedabad. The model runs in this browser. A Hugging Face account is not required. The first weights download is about 400 MB–1.1 GB, then the browser keeps them.</p>

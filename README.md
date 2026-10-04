@@ -10,7 +10,7 @@ generated: { by: human:anubhav-gain, at: 2026-10-04T00:00:00Z }
 
 # agent-fleet
 
-![Agent Fleet. Anubhav Gain. Local AI on this machine.](docs/assets/banner.webp)
+![A standing card and an open book. Agent Fleet, Anubhav Gain.](docs/assets/hero.webp)
 
 Browser-side inference and a staged Docker agent stack, operated from
 [anubhavg-icpl/agent-fleet](https://github.com/anubhavg-icpl/agent-fleet).

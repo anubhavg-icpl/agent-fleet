@@ -27,6 +27,23 @@ a:hover { text-decoration: underline; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .wrap { max-width: 980px; margin: 0 auto; padding: 56px 24px 80px; }
 
+.hero, .seal { display: block; }
+.hero {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: center;
+  margin: 0 0 28px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-2);
+}
+.brand-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.brand-row .kicker { margin: 0; }
+.seal {
+  width: 36px; height: 36px; object-fit: cover;
+  border: 1px solid var(--accent); border-radius: 4px; background: var(--bg);
+}
 .kicker {
   margin: 0 0 12px;
   font-family: var(--mono); font-size: 11px; letter-spacing: .16em;
@@ -120,6 +137,7 @@ footer {
 }
 @media (max-width: 760px) {
   .wrap { padding: 32px 16px 56px; }
+  .hero { height: 168px; margin-bottom: 22px; }
   h1 { font-size: 40px; }
   h2 { font-size: 24px; }
   .grid { grid-template-columns: 1fr; }
@@ -131,7 +149,11 @@ footer {
 <div class="wrap">
 
 <header>
-  <p class="kicker">Anubhav Gain</p>
+  <img class="hero" src="assets/hero.webp" alt="" width="1400" height="788" />
+  <div class="brand-row">
+    <img class="seal" src="assets/mark.webp" alt="" width="36" height="36" />
+    <p class="kicker">Anubhav Gain</p>
+  </div>
   <h1>Agent Fleet</h1>
   <p class="role">Security software engineer at Infopercept, Ahmedabad.</p>
   <p class="sub">The chat runs in this browser. GitHub Pages hosts this page and the chat. Hugging Face is not required to open them. A PRO plan is what publishes the Docker services.</p>
